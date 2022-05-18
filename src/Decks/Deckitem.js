@@ -1,25 +1,30 @@
 import React, {useState, useEffect} from "react"
 import { Link, useParams, useHistory } from "react-router-dom"
-// import { readDeck } from "../utils/api"
+import { deleteDeck } from "../utils/api"
 // import Deck from "../Layout/Deck"
 
 export default function DeckItem({ deck }){
     const history = useHistory()
     // console.log("deck: ", deck)
 
-    // const params = useParams()
-    // console.log("params", params)
+
 
     const params = useParams()
     // console.log("params", params)
-    const deckId = params.deckId
+    console.log("deckId: ", deck.id)
+    const deckId = deck.id
 
     const handleDelete = async (id) => {
         const result = window.confirm("Are you sure you want to delete this deck?")
         if (result){
-            return (
-                history.push("/")
-            )
+            const ac = new AbortController()
+            try{
+                await deleteDeck(deckId, ac.signal)
+                window.location.reload(false)
+                
+            }catch(error){
+                console.log(error)
+            }
         }
     }
 
