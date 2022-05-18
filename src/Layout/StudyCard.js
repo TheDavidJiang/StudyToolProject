@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import { Link, useRouteMatch, useParams } from "react-router-dom"
+import { Link, useRouteMatch, useParams, useHistory } from "react-router-dom"
 
 
 
@@ -7,13 +7,33 @@ function StudyCard({currentDeck, deckId}){
     // console.log("currentDeeck", currentDeck.cards)
 
     const [showAnswer, setShowAnswer] = useState(false)
+    const [index, setIndex] = useState(0)
+    const card = currentDeck.cards[index]
+    const history = useHistory()
 
+    const handleNext = () =>{
+        if (index + 1 < currentDeck.cards.length){
+            setIndex(index + 1)
+            setShowAnswer(false)
+        }else{
+            const result = window.confirm("Restart cards? \n\n Click cancel to return to the home page.")
+            if (result){
+                setIndex(0)
+            }else{
+                history.push("/")
+            }
+        }
+        
+    }
+    console.log("index: ", index)
+    console.log("currentDeck: ", currentDeck)
+    
 
     const handleFlip = ()=> {
         setShowAnswer(!showAnswer) 
     }
 
-
+// when next is clicked, then change the index of the card to the next one
     let numOfCards = currentDeck.cards.length
     if (numOfCards < 3){
         return (
@@ -26,21 +46,18 @@ function StudyCard({currentDeck, deckId}){
     }else{
         return(
             <React.Fragment>
-                {currentDeck.cards.map((card, index)=>{
-                    // console.log("card:", card)
-                    // console.log("index: ", index)
-                    return(
-                        <div className="card" key={card.id}>
-                        <div className="card-body">
-                        <h5 className="card-title">Card {index + 1} of {currentDeck.cards.length}</h5>
-                            { showAnswer ? <p className="card-text">{card.back}</p> :
-                            <p className="card-text">{card.front}</p>}
-                            <button className="btn btn-secondary" onClick={handleFlip}>Flip</button>
-                            { showAnswer && <button className="btn btn-primary">Next</button>}
-                        </div>
-                    </div>
-                    )
-                })}
+                
+                <div className="card" key={card.id}>
+                <div className="card-body">
+                <h5 className="card-title">Card {index + 1} of {currentDeck.cards.length}</h5>
+                    { showAnswer ? <p className="card-text">{card.back}</p> :
+                    <p className="card-text">{card.front}</p>}
+                    <button className="btn btn-secondary" onClick={handleFlip}>Flip</button>
+                    { showAnswer && <button className="btn btn-primary" onClick={handleNext}>Next</button>}
+                </div>
+            </div>
+                    
+               
             </React.Fragment>
         )
     }
