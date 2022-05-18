@@ -46,10 +46,10 @@ function Study(){
                     </ol>
                 </nav>
        <div>
-            <h3>{currentDeck.name}</h3>
+            <h3>{currentDeck.name}: Study</h3>
         </div>
         <div>
-            <StudyCard currentDeck={currentDeck} key={currentDeck.id}/>            
+            <StudyCard currentDeck={currentDeck} key={currentDeck.id} deckId={deckId}/>            
         </div>
         </React.Fragment>
         ) : null
