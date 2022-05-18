@@ -24,7 +24,7 @@ function Study(){
         findDeck()
         return () => ac.abort()
 
-    }, [])
+    }, [deckId])
     // console.log("currentDeck:", currentDeck)
     // console.log("currentDeck card:", currentDeck.cards)
     // console.log("cards:", currentDeck.cards.map((card)=>{

@@ -14,7 +14,7 @@ import AddCard from "./AddCard";
 
 function Layout() {
   return (
-    <>
+    <React.Fragment>
       <Header />
       <div className="container">
         {/* TODO: Implement the screen starting here */}
@@ -54,7 +54,7 @@ function Layout() {
         </Switch>
 
       </div>
-    </>
+    </React.Fragment>
   );
 }
 
