@@ -19,7 +19,6 @@ function Study(){
             }catch(error){
                 console.log(error)
             }
-         
         }
         findDeck()
         return () => ac.abort()

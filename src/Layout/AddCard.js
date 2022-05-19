@@ -1,6 +1,6 @@
-// import { updateDeck } from "../utils/api"
-// import React, {useEffect, useState} from "react"
-// import { Link, useParams, useRouteMatch} from "react-router-dom"
+import React, {useEffect, useState} from "react"
+import { Link, useParams, useRouteMatch} from "react-router-dom"
+import { updateDeck } from "../utils/api"
 
 // should probably use the updateDeck function from index.js
 

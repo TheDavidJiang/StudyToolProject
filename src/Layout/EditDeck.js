@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import {readDeck} from "../utils/api/index.js"
+import {readDeck, updateDeck} from "../utils/api/index.js"
 
 function EditDeck(){
     const params = useParams()
     // console.log("params", params)
     const deckId = params.deckId
 
-    const [decks, setDecks] = useState([])
     const [currentDeck, setCurrentDeck] = useState(null)
     const [deckName, setDeckName] = useState("")
     const [deckDescription, setDeckDescription] = useState("")
+    
 
     const handleDeckNameChange = (event)=>setDeckName(event.target.value)
     const handleDeckDescriptionChange = (event)=> setDeckDescription(event.target.value)
-    const handleSubmit = (event) =>{
+
+    const handleSubmit = async (event) =>{
       event.preventDefault()
-      console.log("Submitted lmao", deckName, deckDescription)
-      setDeckName("")
-      setDeckDescription("")
-    }
+      console.log("Submitted lol", deckName, deckDescription)
+      const ac = new AbortController()
+      try{
+          const data = await updateDeck({id: currentDeck.id, name : deckName, description : deckDescription}, ac.signal)
+          setCurrentDeck(data)
+          setDeckName("")
+          setDeckDescription("")
+      }catch(error){
+          console.log(error)
+      }
+        return () => ac.abort()
+        }
 
     useEffect(()=>{
         const ac = new AbortController()
@@ -30,14 +39,11 @@ function EditDeck(){
             }catch(error){
                 console.log(error)
             }
-         
         }
         findDeck()
         return () => ac.abort()
-
     }, [])
 
-    console.log("currentdecjk: ", currentDeck)
     if (currentDeck){
         return (
             <React.Fragment>
@@ -63,6 +69,7 @@ function EditDeck(){
             className="form-control"
             onChange={handleDeckNameChange}
             placeholder={currentDeck.name}
+            required
           />
 
           <br></br>
@@ -74,6 +81,7 @@ function EditDeck(){
             className="form-control"
             onChange={handleDeckDescriptionChange}
             placeholder={currentDeck.description}
+            required
           />
 
           <br></br>

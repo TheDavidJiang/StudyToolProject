@@ -9,6 +9,7 @@ function Deck(){
     const history = useHistory()
     const deckId = params.deckId
 
+
     const [currentDeck, setCurrentDeck] = useState(null)
 
 
@@ -77,7 +78,7 @@ function Deck(){
                         </div>
                         <div className="col">
                             <p className="card-text">{card.back}</p>
-                            <button className="btn btn-secondary"  >Edit</button>
+                            <Link to={`/decks/${deckId}/cards/${card.id}/edit`}><button className="btn btn-secondary">Edit</button></Link>
                             <button className="btn btn-danger" >Delete</button>
                         </div>
                     </div>

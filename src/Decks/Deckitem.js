@@ -11,7 +11,7 @@ export default function DeckItem({ deck }){
 
     const params = useParams()
     // console.log("params", params)
-    console.log("deckId: ", deck.id)
+
     const deckId = deck.id
 
     const handleDelete = async (id) => {
