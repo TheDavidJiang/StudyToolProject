@@ -43,7 +43,7 @@ export default function DeckItem({ deck, setDecks }){
             <div className="card-body">
                 <h5 className="card-title">{deck.name}</h5>
                 <p>{deck.description}</p>
-                {deck.cards.length ? <p>{deck.cards.length} cards left</p> : <p>0 cards left</p>}
+                <p>{deck.cards.length} cards</p>
                 
             </div>
             <div>

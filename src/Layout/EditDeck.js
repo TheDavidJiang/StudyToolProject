@@ -17,7 +17,7 @@ function EditDeck(){
 
     const handleSubmit = async (event) =>{
       event.preventDefault()
-      console.log("Submitted lol", deckName, deckDescription)
+
       const ac = new AbortController()
       try{
           const data = await updateDeck({id: currentDeck.id, name : deckName, description : deckDescription}, ac.signal)
@@ -50,7 +50,7 @@ function EditDeck(){
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                        <li className="breadcrumb-item"><Link to="/">{currentDeck.name}</Link></li>
+                        <li className="breadcrumb-item"><Link to={`/decks/${currentDeck.id}`}>{currentDeck.name}</Link></li>
                         <li className="breadcrumb-item active" aria-current="page">Edit Deck</li>
                     </ol>
                 </nav>
@@ -68,8 +68,9 @@ function EditDeck(){
             id="name"
             className="form-control"
             onChange={handleDeckNameChange}
-            placeholder={currentDeck.name}
+
             required
+            defaultValue={currentDeck.name}
           />
 
           <br></br>
@@ -80,7 +81,7 @@ function EditDeck(){
             id="description"
             className="form-control"
             onChange={handleDeckDescriptionChange}
-            placeholder={currentDeck.description}
+            defaultValue={currentDeck.description}
             required
           />
 

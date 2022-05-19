@@ -22,10 +22,8 @@ function AddCard(){
         const ac = new AbortController()
       try{
           const data = await createCard(deckId, {front: frontSide, back: backSide}, ac.signal)
-          setCurrentDeck(data)
           setFrontSide("")
           setBackSide("")
-          window.location.reload();
       }catch(error){
           console.log(error)
       }
@@ -73,6 +71,7 @@ function AddCard(){
                         className="form-control"
                         placeholder="Front side of card"
                         onChange={handleFrontSideChange}
+                        value={frontSide}
                         
                         />
                     </div>
@@ -86,16 +85,17 @@ function AddCard(){
                         className="form-control"
                         placeholder="Back side of card"
                         onChange={handleBackSideChange}
+                        value={backSide}
                         />
                     </div>
                     <br></br>
                         <Link to={`/decks/${currentDeck.id}`}>
-                            <button className="btn btn-secondary" value="Done">
+                            <button className="btn btn-secondary" value="done">
                                 Done
                             </button>
                         </Link>
                         <button type="submit" className="btn btn-primary" value="submit">
-                                Submit
+                                Save
                             </button>
                 </form>
             </div>
@@ -103,7 +103,7 @@ function AddCard(){
         )
         
     }else{
-        return <p>Loading...</p>
+        return <p></p>
     }    
 }
 
