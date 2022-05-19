@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import { Link, useParams, useRouteMatch, useHistory} from "react-router-dom"
-import { readDeck, deleteDeck } from "../utils/api"
+import { readDeck, deleteDeck, readCard, deleteCard } from "../utils/api"
 
 
 
@@ -10,7 +10,9 @@ function Deck(){
     const deckId = params.deckId
 
 
+
     const [currentDeck, setCurrentDeck] = useState(null)
+    
 
 
     useEffect(()=>{
@@ -28,13 +30,29 @@ function Deck(){
     }, [deckId])
 
 
-    const handleDelete = async (id) => {
+    const handleDeleteDeck = async (id) => {
         const result = window.confirm("Are you sure you want to delete this deck?")
         if (result){
             const ac = new AbortController()
             try{
                 await deleteDeck(deckId, ac.signal)
                 history.push("/")
+            }catch(error){
+                console.log(error)
+            }
+        }
+    }
+
+    const handleDeleteCard = async (event) => {
+        const cardId = event.target.id
+        const result = window.confirm("Are you sure you want to delete this card?")
+        if (result){
+            const ac = new AbortController()
+            try{
+                await deleteCard(cardId, ac.signal)
+                // window.location.reload(false)
+                const response = await readDeck(deckId, ac.signal)
+                setCurrentDeck(response)
             }catch(error){
                 console.log(error)
             }
@@ -59,15 +77,13 @@ function Deck(){
                 <Link to={`/decks/${deckId}/edit`}><button className="btn btn-secondary" >Edit</button></Link>
                 <Link to={`/decks/${deckId}/study`}><button className="btn btn-primary" >Study</button></Link>
                 <Link to={`/decks/${deckId}/cards/new`}><button className="btn btn-primary" >Add Cards</button></Link>
-                <button className="btn btn-danger" onClick={handleDelete} >Delete</button>
+                <button className="btn btn-danger" onClick={handleDeleteDeck} >Delete</button>
                 </div>
                 
                 <br/>
                 <div>
-                    <h3>Cards</h3>
-                    {currentDeck.cards.map((card, index)=>{
-            // console.log("card:", card)
-            // console.log("index: ", index)
+        <h3>Cards</h3>
+        {currentDeck.cards.map((card, index)=>{
             return(
                 <div className="card" key={card.id}>
                 <div className="card-body">
@@ -79,7 +95,7 @@ function Deck(){
                         <div className="col">
                             <p className="card-text">{card.back}</p>
                             <Link to={`/decks/${deckId}/cards/${card.id}/edit`}><button className="btn btn-secondary">Edit</button></Link>
-                            <button className="btn btn-danger" >Delete</button>
+                            <button id={card.id} className="btn btn-danger" onClick={handleDeleteCard} >Delete</button>
                         </div>
                     </div>
                 </div>

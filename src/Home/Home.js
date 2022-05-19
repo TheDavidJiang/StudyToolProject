@@ -41,7 +41,7 @@ export default function Home() {
       <div>
         <ul>
           {decks.map((deck) => (
-            <DeckItem key={deck.id} deck={deck} />
+            <DeckItem key={deck.id} deck={deck} setDecks={setDecks} />
           ))}
         </ul>
       </div>

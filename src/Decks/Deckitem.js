@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react"
 import { Link, useParams, useHistory } from "react-router-dom"
-import { deleteDeck } from "../utils/api"
+import { listDecks, deleteDeck } from "../utils/api"
 // import Deck from "../Layout/Deck"
 
-export default function DeckItem({ deck }){
+export default function DeckItem({ deck, setDecks }){
     const history = useHistory()
     // console.log("deck: ", deck)
 
@@ -20,7 +20,9 @@ export default function DeckItem({ deck }){
             const ac = new AbortController()
             try{
                 await deleteDeck(deckId, ac.signal)
-                window.location.reload(false)
+                // window.location.reload(false)
+                const response = await listDecks(ac.signal)
+                setDecks(response)
                 
             }catch(error){
                 console.log(error)
