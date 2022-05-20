@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import { useParams, Link , useHistory} from "react-router-dom"
 import { readCard, readDeck, updateCard } from "../utils/api"
+import Form from "./Form"
 
 
 function EditCard(){
@@ -75,40 +76,12 @@ function EditCard(){
                     </ol>
                 </nav> 
                 <h3>Edit Card</h3>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="front">
-                            Front
-                        </label>
-                        <textarea 
-                        className="form-control"
-                        defaultValue={frontSide}
-                        required
-                        onChange={handleFrontSideChange}/>
-                    </div>
-                    <div>
-                        <label htmlFor="back">
-                            Back
-                        </label>
-                        <textarea 
-                        className="form-control"
-                        defaultValue={backSide}
-                        required
-                        onChange={handleBackSideChange}/>
-                        
-                    </div>
-                    <br></br>
-                        <Link to={`/decks/${currentDeck.id}`}>
-                            <button className="btn btn-secondary" value="done">
-                                Cancel
-                            </button>
-                        </Link>
-                        
-                        <button type="submit" className="btn btn-primary" value="submit">
-                                Submit
-                            </button>
-                            
-                </form>
+                <div>
+                    <Form handleSubmit = {handleSubmit} handleFrontSideChange = {handleFrontSideChange
+                    } handleBackSideChange = {handleBackSideChange} frontSide={frontSide} backSide={backSide} 
+                    currentDeck = {currentDeck} />
+                </div>
+            
             </React.Fragment>
             
         )

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import { Link, useParams, useRouteMatch} from "react-router-dom"
 import { readDeck, createCard } from "../utils/api"
+import Form from "./Form"
 
 // should probably use the updateDeck function from index.js
 
@@ -60,45 +61,11 @@ function AddCard(){
             </div>
 
             <div>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="front">
-                            Front
-                        </label>
-                        <textarea
-                        name="front"
-                        id="front"
-                        className="form-control"
-                        placeholder="Front side of card"
-                        onChange={handleFrontSideChange}
-                        value={frontSide}
-                        
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="back">
-                            Back
-                        </label>
-                        <textarea
-                        name="back"
-                        id="back"
-                        className="form-control"
-                        placeholder="Back side of card"
-                        onChange={handleBackSideChange}
-                        value={backSide}
-                        />
-                    </div>
-                    <br></br>
-                        <Link to={`/decks/${currentDeck.id}`}>
-                            <button className="btn btn-secondary" value="done">
-                                Done
-                            </button>
-                        </Link>
-                        <button type="submit" className="btn btn-primary" value="submit">
-                                Save
-                            </button>
-                </form>
-            </div>
+                    <Form handleSubmit = {handleSubmit} handleFrontSideChange = {handleFrontSideChange
+                    } handleBackSideChange = {handleBackSideChange} frontSide={frontSide} backSide={backSide} 
+                    currentDeck = {currentDeck} />
+                </div>
+            
             </React.Fragment>
         )
         
